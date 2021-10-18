@@ -1,15 +1,27 @@
 # TweetURLtoData
 
 TwitterAPI を使わずにツイート内容を取得する<br>
-そのうち JavaScript でクライアントのみで動作するの作る<br>
+そのうち JavaScript で Web クライアントのみで動作するの作る<br>
 
 # import
 
-そのうち書く<br>
+```Console
+pip install -r requirements.txt
+```
+
+現在使えません
 
 # use
 
-そのうち書く<br>
+```Python
+from TweetURLtoData import TweetURLtoData
+TweetURLtoData("xxxxxxxxxxxxxxxxxxx")
+```
+
+```Python
+from TweetURLtoData import TweetURLtoData,TweetURLExtractor
+TweetURLtoData(TweetURLExtractor("https://twitter.com/xxxxxxxxxx/status/xxxxxxxxxxxxxxxxxxx")[0][1])
+```
 
 # License
 

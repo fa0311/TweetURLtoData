@@ -15,14 +15,18 @@ class TweetURLtoData:
         self.params = {
             "features": "tfw_experiments_cookie_expiration:1209600;tfw_horizon_tweet_embed_9555:hte;tfw_space_card:off",
             "id": id,
-            "lang": "ja"
+            "lang": "en"
         }
         self.headers = {
             "content-type": "application/json; charset=utf-8",
             "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36"
         }
-        self.json = content = requests.get(url=self.url, headers=self.headers, params=self.params).json()
-        self.content = TweetURLtoDataContent(**self.json)
+        self.proxies = {}
+    def get(self, content=True):
+        self.json = requests.get(url=self.url, headers=self.headers, params=self.params, proxies=self.proxies).json()
+        if content:
+            self.content = TweetURLtoDataContent(**self.json)
+        return self
 
 @dataclass
 class TweetURLtoDataContent:
@@ -44,6 +48,7 @@ class TweetURLtoDataContent:
     conversation_count: int = None
     news_action_type: str = None
     quoted_tweet: dict = None
+    parent: dict = None
 
     def __post_init__(self):
         self.created_at = datetime.datetime.fromisoformat(self.created_at.replace("Z", ""))
@@ -55,6 +60,8 @@ class TweetURLtoDataContent:
             self.video = TweetURLtoDataVideo(**self.video)
         if self.quoted_tweet != None:
             self.quoted_tweet = TweetURLtoDataContent(**self.quoted_tweet)
+        if self.parent != None:
+            self.parent = TweetURLtoDataContent(**self.parent)
 
 @dataclass
 class TweetURLtoDataEntities:
