@@ -22,14 +22,23 @@ class TweetURLtoData:
             "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36"
         }
         self.proxies = {}
-    def get(self, content=True):
+
+    def get(self, content_flag=True):
+        self.content_flag = content_flag
         self.json = requests.get(url=self.url, headers=self.headers, params=self.params, proxies=self.proxies).json()
-        if content:
+        self.json["request"] = {
+            "url":self.url,
+            "params":self.params,
+            "headers":self.headers,
+            "proxies":self.proxies,
+        }
+        if self.content_flag:
             self.content = TweetURLtoDataContent(**self.json)
         return self
 
 @dataclass
 class TweetURLtoDataContent:
+    request: dict = None
     in_reply_to_screen_name:str  = None
     in_reply_to_status_id_str:str  = None
     in_reply_to_user_id_str:str = None
@@ -37,6 +46,7 @@ class TweetURLtoDataContent:
     reply_count: int = 0
     retweet_count: int = 0
     favorite_count: int = 0
+    self_thread: dict = None
     created_at: str = None
     display_text_range: dict = None
     entities: dict = None
@@ -62,6 +72,32 @@ class TweetURLtoDataContent:
             self.quoted_tweet = TweetURLtoDataContent(**self.quoted_tweet)
         if self.parent != None:
             self.parent = TweetURLtoDataContent(**self.parent)
+        if self.self_thread != None:
+            self.self_thread = TweetURLtoDataSelfThread(**self.self_thread)
+
+    def reply_to(self):
+        if self.in_reply_to_status_id_str != None:
+            data = TweetURLtoData("")
+            data.url = self.request["url"]
+            data.params = self.request["params"]
+            data.params["id"] = self.in_reply_to_status_id_str
+            data.headers = self.request["headers"]
+            data.proxies = self.request["proxies"]
+            return data.get().content
+
+    def thread(self):
+        if self.self_thread != None:
+            data = TweetURLtoData("")
+            data.url = self.request["url"]
+            data.params = self.request["params"]
+            data.params["id"] = self.in_reply_to_status_id_str
+            data.headers = self.request["headers"]
+            data.proxies = self.request["proxies"]
+            return data.get().content
+
+@dataclass
+class TweetURLtoDataSelfThread:
+    id_str: str = None
 
 @dataclass
 class TweetURLtoDataEntities:
