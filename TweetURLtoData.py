@@ -5,7 +5,7 @@ import re
 
 
 def TweetURLExtractor(text):
-    pattern = "(https?://twitter.com/[\w_]{1,14}/status/(\d{,19}))"
+    pattern = "(https?://twitter.com/[\w_]{1,15}/status/(\d{,19}))"
     return re.findall(pattern, text)
 
 
