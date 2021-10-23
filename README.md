@@ -9,8 +9,6 @@ TwitterAPI を使わずにツイート内容を取得する<br>
 pip install -r requirements.txt
 ```
 
-現在使えません
-
 # use
 
 ```Python
