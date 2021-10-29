@@ -57,6 +57,7 @@ class TweetURLtoDataContent:
     video: dict = None
     conversation_count: int = None
     news_action_type: str = None
+    card: dict = None
     quoted_tweet: dict = None
     parent: dict = None
 
@@ -68,6 +69,8 @@ class TweetURLtoDataContent:
             self.photos = [TweetURLtoDataPhoto(**photo) for photo in self.photos]
         if self.video != None:
             self.video = TweetURLtoDataVideo(**self.video)
+        if self.card != None:
+            self.card = TweetURLtoDataCard(**self.card)
         if self.quoted_tweet != None:
             self.quoted_tweet = TweetURLtoDataContent(**self.quoted_tweet)
         if self.parent != None:
@@ -198,3 +201,140 @@ class TweetURLtoDataVariants:
 @dataclass
 class TweetURLtoDataMediaAvailability:
     status: str = None
+
+@dataclass
+class TweetURLtoDataCard:
+    card_platform: dict = None
+    name: str = None
+    url: str = None
+    binding_values: dict = None
+    def __post_init__(self):
+        self.card_platform = TweetURLtoDataCardPlatform(**self.card_platform)
+        self.binding_values = TweetURLtoDataBinding(**self.binding_values)
+        
+@dataclass
+class TweetURLtoDataCardPlatform:
+    platform: dict = None
+    def __post_init__(self):
+        self.platform = TweetURLtoDataPlatform(**self.platform)
+
+@dataclass
+class TweetURLtoDataPlatform:
+    audience:str = None
+    device:str = None
+
+@dataclass
+class TweetURLtoDataPlatformAudience:
+    name:str = None
+
+@dataclass
+class TweetURLtoDataPlatformDevice:
+    name:str = None
+    version:str = None
+
+@dataclass
+class TweetURLtoDataBinding:
+    photo_image_full_size_large: dict = None
+    thumbnail_image: dict = None
+    description: dict = None
+    domain: dict = None
+    thumbnail_image_large: dict = None
+    summary_photo_image_small: dict = None
+    thumbnail_image_original: dict = None
+    site: dict = None
+    photo_image_full_size_small: dict = None
+    summary_photo_image_large: dict = None
+    thumbnail_image_small: dict = None
+    thumbnail_image_x_large: dict = None
+    photo_image_full_size_original: dict = None
+    vanity_url: dict = None
+    photo_image_full_size: dict = None
+    thumbnail_image_color: dict = None
+    title: dict = None
+    summary_photo_image_color: dict = None
+    summary_photo_image_x_large: dict = None
+    summary_photo_image: dict = None
+    photo_image_full_size_color: dict = None
+    photo_image_full_size_x_large: dict = None
+    card_url: dict = None
+    summary_photo_image_original: dict = None
+    def __post_init__(self):
+        self.photo_image_full_size_large = TweetURLtoDataImage(**self.photo_image_full_size_large)
+        self.thumbnail_image = TweetURLtoDataImage(**self.thumbnail_image)
+        self.description = TweetURLtoDataString(**self.description)
+        self.domain = TweetURLtoDataString(**self.domain)
+        self.thumbnail_image_large = TweetURLtoDataImage(**self.thumbnail_image_large)
+        self.summary_photo_image_small = TweetURLtoDataImage(**self.summary_photo_image_small)
+        self.thumbnail_image_original = TweetURLtoDataImage(**self.thumbnail_image_original)
+        self.site = TweetURLtoDataSite(**self.site)
+        self.photo_image_full_size_small = TweetURLtoDataImage(**self.photo_image_full_size_small)
+        self.summary_photo_image_large = TweetURLtoDataImage(**self.summary_photo_image_large)
+        self.thumbnail_image_small = TweetURLtoDataImage(**self.thumbnail_image_small)
+        self.thumbnail_image_x_large = TweetURLtoDataImage(**self.thumbnail_image_x_large)
+        self.photo_image_full_size_original = TweetURLtoDataImage(**self.photo_image_full_size_original)
+        self.vanity_url = TweetURLtoDataVanity(**self.vanity_url)
+        self.photo_image_full_size = TweetURLtoDataImage(**self.photo_image_full_size)
+        self.thumbnail_image_color = TweetURLtoDataImageColor(**self.thumbnail_image_color)
+        self.title = TweetURLtoDataString(**self.title)
+        self.summary_photo_image_color = TweetURLtoDataImageColor(**self.summary_photo_image_color)
+        self.summary_photo_image_x_large = TweetURLtoDataImage(**self.summary_photo_image_x_large)
+        self.summary_photo_image = TweetURLtoDataImage(**self.summary_photo_image)
+        self.photo_image_full_size_color = TweetURLtoDataImageColor(**self.photo_image_full_size_color)
+        self.photo_image_full_size_x_large = TweetURLtoDataImage(**self.photo_image_full_size_x_large)
+        self.card_url = TweetURLtoDataVanity(**self.card_url)
+        self.summary_photo_image_original = TweetURLtoDataImage(**self.summary_photo_image_original)
+
+@dataclass
+class TweetURLtoDataImage:
+    image_value: dict = None
+    type:str = None
+    def __post_init__(self):
+        self.image_value = TweetURLtoDataImageValue(**self.image_value)
+    
+@dataclass
+class TweetURLtoDataImageValue:
+    height:int = None
+    width:int = None
+    url:str = None
+
+@dataclass
+class TweetURLtoDataString:
+    string_value: str = None
+    type: str = None
+
+@dataclass
+class TweetURLtoDataSite:
+    scribe_key:str = None
+    type:str = None
+    user_value:dict = None
+    def __post_init__(self):
+        self.user_value = TweetURLtoDataSiteUser(**self.user_value)
+    
+@dataclass
+class TweetURLtoDataSiteUser:
+    id_str:str = None
+    path: dict = None
+
+@dataclass
+class TweetURLtoDataVanity:
+    scribe_key:str = None
+    string_value:str = None
+    type:str = None
+
+@dataclass
+class TweetURLtoDataImageColor:
+    image_color_value:str = None
+    type:str = None
+
+@dataclass
+class TweetURLtoDataImageColorValue:
+    palette:dict = None
+    def __post_init__(self):
+        self.palette = [TweetURLtoDataPalette(**palette) for palette in self.palette]
+
+@dataclass
+class TweetURLtoDataPalette:
+    rgb:dict = None
+    percentage:int = None
+    def __post_init__(self):
+        self.rgb = TweetURLtoDataColor(**self.rgb)
