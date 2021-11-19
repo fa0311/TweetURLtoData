@@ -22,7 +22,7 @@ for url in TweetURLExtractor(msg):
     print(TweetURLtoData(url[1]).get().content.user.name) #Elon Musk  Barack Obama  Justin Bieber  KATY PERRY
 
 option = TweetURLtoData("1448558569922703363")
-print(option.get(False).json["user"]["name"]) #Elon Musk
+print(option.get().content.user.name) #Elon Musk
 
 
 option2 = TweetURLtoData("1448558569922703363")
