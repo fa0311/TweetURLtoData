@@ -1,7 +1,6 @@
 # TweetURLtoData
 
 TwitterAPI を使わずにツイート内容を取得する<br>
-そのうち JavaScript で Web クライアントのみで動作するの作る<br>
 
 # import
 
