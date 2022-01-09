@@ -3,7 +3,7 @@
 TwitterAPI を使わずにツイート内容を取得する<br>
 ログイン: [TwitterFrontendFlow](https://github.com/fa0311/TwitterFrontendFlow) /
 取得: [TweetURLtoData](https://github.com/fa0311/TweetURLtoData) /
-スペース: [TwitterSpacesWiretap](https://github.com/fa0311/TwitterSpacesWiretapTwitter)
+スペース: [TwitterSpacesWiretap](https://github.com/fa0311/TwitterSpacesWiretap)
 
 # import
 
